@@ -59,7 +59,7 @@ body, html {
 .level-experience {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
 }
 
@@ -113,10 +113,7 @@ body, html {
     font-weight: bold;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     text-align: center;
-}
-
-.wallet-button span {
-    font-size: smaller;
+    font-size: 0.8em; /* Wallet butonunu küçültmek için */
 }
 
 .gold-section {
@@ -146,7 +143,7 @@ body, html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between; /* Space-between kullanarak elementler arası boşluk */
     width: 100%;
     box-sizing: border-box;
 }
@@ -255,13 +252,13 @@ body, html {
 .inventory {
     width: 100%;
     margin-top: 5px; /* Margin azaltıldı */
-    margin-bottom: 10px; /* Navbar ile arada boşluk */
 }
 
 .inventory-items {
     display: flex;
     justify-content: space-around;
     width: 100%;
+    margin-bottom: 20px; /* Navbar ile arada boşluk */
 }
 
 .inventory-item {

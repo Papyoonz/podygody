@@ -127,6 +127,9 @@ body, html {
 }
 
 .currency-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 1.2em;
     font-weight: bold;
     color: gold;
@@ -141,6 +144,24 @@ body, html {
 
 .currency-display.animate {
     transform: scale(1.5);
+}
+
+.currency-display .doggar-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 2px;
+}
+
+.doggar-over-dog {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 5px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .main {
@@ -329,6 +350,7 @@ body, html {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 .inventory-item img {
@@ -357,6 +379,9 @@ body, html {
     top: 40px;
     left: 50%;
     transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.5); /* Transparan arkaplan */
+    padding: 2px 5px; /* İç boşluk */
+    border-radius: 5px; /* Köşeleri yuvarla */
 }
 
 .inventory-item:hover {
@@ -527,7 +552,7 @@ body, html {
     box-sizing: border-box;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     position: fixed; /* Navbar'ı sabitler */
-    bottom: 0; /* Navbar'ı sayfanın altına yerleştirir */
+    bottom: 5%; /* Navbar'ı bottom'dan %5 yüksekte yerleştirir */
 }
 
 .navbar .nav-button {

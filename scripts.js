@@ -7,18 +7,23 @@ let topCooldown = 0;
 let boneCooldown = 0;
 let mamaUsed = 0;
 
-document.getElementById('dog').addEventListener('click', () => {
-    if (energy > 0) {
-        increaseDoggar();
-        decreaseEnergy(0.2);
-        decreaseHappiness(0.2);
-    }
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('dog').addEventListener('click', () => {
+        if (energy > 0) {
+            increaseDoggar();
+            decreaseEnergy(0.2);
+            decreaseHappiness(0.2);
+        }
+    });
+
+    updateEnergyBar();
+    updateHappinessBar();
 });
 
 function increaseDoggar() {
-    let earnedDoggar = Math.random() * 2; // Rastgele 0.1 ila 2 arasında doggar kazan
-    doggar += parseFloat(earnedDoggar.toFixed(1));
-    document.getElementById('doggar-display').innerText = `${doggar.toFixed(1)} Doggar`;
+    let earnedDoggar = (Math.random() * 1.9) + 0.1; // Rastgele 0.1 ila 2 arasında doggar kazan
+    doggar += parseFloat(earnedDoggar.toFixed(2));
+    document.getElementById('doggar-display').innerText = `${doggar.toFixed(2)} Doggar`;
 }
 
 function increaseEnergy(amount) {
@@ -92,17 +97,21 @@ function giveBone() {
 
 function startCooldown(item) {
     if (item === 'top') {
-        setInterval(() => {
+        let topInterval = setInterval(() => {
             if (topCooldown > 0) {
                 topCooldown--;
                 document.getElementById('top-timer').innerText = formatTime(topCooldown);
+            } else {
+                clearInterval(topInterval);
             }
         }, 1000);
     } else if (item === 'bone') {
-        setInterval(() => {
+        let boneInterval = setInterval(() => {
             if (boneCooldown > 0) {
                 boneCooldown--;
                 document.getElementById('bone-timer').innerText = formatTime(boneCooldown);
+            } else {
+                clearInterval(boneInterval);
             }
         }, 1000);
     }
@@ -116,16 +125,10 @@ function formatTime(seconds) {
 
 function updateEnergyBar() {
     document.getElementById('energy-fill').style.width = `${energy}%`;
-    document.getElementById('energy-percentage').innerText = `${energy}%`;
+    document.getElementById('energy-percentage').innerText = `${energy.toFixed(2)}%`;
 }
 
 function updateHappinessBar() {
     document.getElementById('happiness-fill').style.width = `${happiness}%`;
-    document.getElementById('happiness-percentage').innerText = `${happiness}%`;
+    document.getElementById('happiness-percentage').innerText = `${happiness.toFixed(2)}%`;
 }
-
-// Oyuna başlarken
-document.addEventListener('DOMContentLoaded', () => {
-    updateEnergyBar();
-    updateHappinessBar();
-});

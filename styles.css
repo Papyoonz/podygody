@@ -114,6 +114,7 @@ body, html {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     text-align: center;
     font-size: 0.8em; /* Wallet butonunu küçültmek için */
+    cursor: pointer;
 }
 
 .gold-section {
@@ -172,6 +173,7 @@ body, html {
     border-radius: 5px;
     flex: 1;
     position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .custom-button img {
@@ -189,6 +191,11 @@ body, html {
 
 .custom-button:not(:last-child) {
     margin-right: 5px;
+}
+
+.custom-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 .custom-button.active::before {
@@ -213,6 +220,11 @@ body, html {
     }
 }
 
+.custom-button.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 .click-dog {
     display: flex;
     justify-content: center;
@@ -227,6 +239,15 @@ body, html {
     width: 30%; /* %25 daha küçültüldü */
     height: auto;
     cursor: pointer;
+}
+
+.dog.clicked {
+    animation: clickEffect 0.5s;
+}
+
+@keyframes clickEffect {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
 }
 
 .bars-section {
@@ -280,8 +301,8 @@ body, html {
 
 .inventory {
     width: 100%;
-    margin-top: 5px; /* Margin azaltıldı */
-    margin-bottom: 10vh; /* Navbar ile arada boşluk */
+    margin-top: 2%; /* Mutluluk barından %2 uzaklık */
+    margin-bottom: 20%; /* Bottom'dan %20 uzaklık */
 }
 
 .inventory-items {
@@ -294,7 +315,7 @@ body, html {
     background: linear-gradient(to right, #004d00, #001a33);
     color: white;
     font-family: 'Roboto', sans-serif;
-    font-size: 12px; /* Daha büyük yazı */
+    font-size: 14px; /* Daha büyük yazı */
     font-weight: bold;
     text-align: center;
     padding: 5px; /* Daha büyük padding */
@@ -302,9 +323,8 @@ body, html {
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s, box-shadow 0.2s;
-    width: 80px; /* Daha büyük boyut */
-    height: 80px; /* Daha büyük boyut */
-    position: relative;
+    flex: 1; /* Butonları genişlet */
+    margin: 0 5px; /* Butonlar arası boşluk */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -312,8 +332,8 @@ body, html {
 }
 
 .inventory-item img {
-    width: 25px; /* Daha büyük ikon */
-    height: 25px; /* Daha büyük ikon */
+    width: 40px; /* Daha büyük ikon */
+    height: 40px; /* Daha büyük ikon */
     margin-bottom: 5px;
 }
 
@@ -334,7 +354,9 @@ body, html {
 }
 
 .item-timer {
-    bottom: 5px;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .inventory-item:hover {
@@ -433,6 +455,64 @@ body, html {
     pointer-events: none;
 }
 
+.tasks {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.tasks-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.tasks-header h2 {
+    color: white;
+    margin: 0;
+}
+
+.tasks-tabs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.tab-button {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+.tab-button:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.tasks-content {
+    width: 100%;
+    max-width: 500px;
+    margin-top: 20px;
+}
+
 .hidden {
     display: none;
 }
@@ -442,7 +522,7 @@ body, html {
     width: 100%;
     display: flex;
     justify-content: space-around;
-    height: 50px; /* Navbar yüksekliği */
+    height: 60px; /* Navbar yüksekliği artırıldı */
     align-items: center;
     box-sizing: border-box;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -460,11 +540,25 @@ body, html {
     display: flex;
     flex-direction: column;
     justify-content: center; /* Yazıları merkeze ortala */
+    align-items: center;
 }
 
 .navbar .nav-button:hover {
     background-color: rgba(255, 255, 255, 0.1);
     transform: scale(1.1);
+}
+
+.nav-button img {
+    width: 40px; /* İkon boyutunu artır */
+    height: 40px; /* İkon boyutunu artır */
+    margin-bottom: 5px;
+}
+
+.nav-button span {
+    font-size: 1em; /* Yazı boyutunu artır */
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
 .auto-bot-timer {
@@ -489,6 +583,23 @@ body, html {
     text-align: center;
     z-index: 10000;
     animation: fadeInOut 5s forwards;
+}
+
+.soon-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    z-index: 10000;
+    animation: fadeInOut 2s forwards;
 }
 
 @keyframes fadeInOut {

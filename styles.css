@@ -294,7 +294,7 @@ body, html {
 }
 
 .navbar {
-    background: linear-gradient(to right, #ff9a9e, #fad0c4);
+    background: linear-gradient(to right, #333, #555); /* Siyah ve gri parlak geçiş */
     width: 100%;
     display: flex;
     justify-content: space-around;
@@ -313,10 +313,13 @@ body, html {
     cursor: pointer;
     padding: 10px 0;
     transition: background-color 0.3s, transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Yazıları merkeze ortala */
 }
 
 .navbar .nav-button:hover {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.1);
     transform: scale(1.1);
 }
 

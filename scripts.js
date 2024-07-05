@@ -1,8 +1,8 @@
-let doggar = 0;
-let energy = 5;
-let happiness = 10;
-let mamaCount = 3;
-let waterCount = 1;
+let doggar =1000;
+let energy = 50;
+let happiness = 50;
+let mamaCount = 30;
+let waterCount = 10;
 let topCooldown = 0;
 let boneCooldown = 0;
 let mamaUsed = 0;
@@ -221,15 +221,15 @@ function buyItem(item, cost, amount) {
 }
 
 function toggleAutoBot() {
-    const dropButton = document.getElementById('drop-button');
+    const cydogsButton = document.getElementById('cydogs-button');
     if (autoBotRunning) {
         clearInterval(autoBotInterval);
-        dropButton.classList.remove('active');
+        cydogsButton.classList.remove('active');
         autoBotRunning = false;
     } else {
         autoBotRunning = true;
         autoBotStartTime = new Date().getTime();
-        dropButton.classList.add('active');
+        cydogsButton.classList.add('active');
         autoBotInterval = setInterval(() => {
             const currentTime = new Date().getTime();
             const elapsedTime = currentTime - autoBotStartTime;

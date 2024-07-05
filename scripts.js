@@ -6,6 +6,19 @@ let waterCount = 1;
 let topCooldown = 0;
 let boneCooldown = 0;
 let mamaUsed = 0;
+let experience = 0;
+let level = 1;
+
+const levels = [
+    { name: 'PUPPY', expRequired: 100 },
+    { name: 'TEEDOGY', expRequired: 1000 },
+    { name: 'DOGGEN', expRequired: 10000 },
+    { name: 'DOGZY', expRequired: 100000 },
+    { name: 'GENDOG', expRequired: 1000000 },
+    { name: 'GENIDOG', expRequired: 10000000 },
+    { name: 'GENIUDOG', expRequired: 100000000 },
+    { name: 'GENIUSDOG', expRequired: 1000000000 }
+];
 
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('dog').addEventListener('click', () => {
@@ -18,12 +31,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateEnergyBar();
     updateHappinessBar();
+    updateExperienceBar();
+    updateLevelName();
 });
 
 function increaseDoggar() {
     let earnedDoggar = (Math.random() * 1.9) + 0.1; // Rastgele 0.1 ila 2 arasında doggar kazan
     doggar += parseFloat(earnedDoggar.toFixed(2));
     document.getElementById('doggar-display').innerText = `${doggar.toFixed(2)} Doggar`;
+    increaseExperience(earnedDoggar);
+}
+
+function increaseExperience(amount) {
+    experience += amount;
+    const currentLevel = levels[level - 1];
+    if (experience >= currentLevel.expRequired) {
+        levelUp();
+    }
+    updateExperienceBar();
+}
+
+function levelUp() {
+    experience -= levels[level - 1].expRequired;
+    level++;
+    updateLevelName();
+}
+
+function updateLevelName() {
+    const currentLevel = levels[level - 1];
+    document.getElementById('level-name').innerText = currentLevel.name;
+}
+
+function updateExperienceBar() {
+    const currentLevel = levels[level - 1];
+    const expPercentage = (experience / currentLevel.expRequired) * 100;
+    document.getElementById('exp-fill').style.width = `${expPercentage}%`;
+    document.getElementById('exp-percentage').innerText = `${expPercentage.toFixed(2)}%`;
 }
 
 function increaseEnergy(amount) {

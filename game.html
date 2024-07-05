@@ -25,7 +25,7 @@
         <div class="currency-display" id="doggar-display">0 Doggar</div>
     </div>
 
-    <div class="main">
+    <div class="main" id="main-screen">
         <div class="button-container">
             <button class="custom-button">
                 <img src="sh.png" alt="Shelter Icon">
@@ -88,9 +88,60 @@
         </div>
     </div>
 
+    <div class="market hidden" id="market">
+        <div class="market-header">
+            <h2>Market</h2>
+            <button class="close-button" onclick="toggleMarket()">X</button>
+        </div>
+        <div class="market-items">
+            <div class="market-item" onclick="buyItem('mama', 50, 10)">
+                <img src="mama.png" alt="Mama">
+                <div class="item-details">
+                    <span>10 Mama</span>
+                    <span>50 Doggar</span>
+                </div>
+            </div>
+            <div class="market-item" onclick="buyItem('mama', 250, 100)">
+                <img src="mama.png" alt="Mama">
+                <div class="item-details">
+                    <span>100 Mama</span>
+                    <span>250 Doggar</span>
+                </div>
+            </div>
+            <div class="market-item" onclick="buyItem('su', 100, 10)">
+                <img src="su.png" alt="Su">
+                <div class="item-details">
+                    <span>10 Su</span>
+                    <span>100 Doggar</span>
+                </div>
+            </div>
+            <div class="market-item" onclick="buyItem('su', 250, 50)">
+                <img src="su.png" alt="Su">
+                <div class="item-details">
+                    <span>50 Su</span>
+                    <span>250 Doggar</span>
+                </div>
+            </div>
+            <div class="market-item" onclick="buyItem('top', 10000, 1)">
+                <img src="top.png" alt="Top">
+                <div class="item-details">
+                    <span>1 Top</span>
+                    <span>10000 Doggar</span>
+                </div>
+            </div>
+            <div class="market-item" onclick="buyItem('oyuncak', 50000, 1)">
+                <img src="oy.png" alt="Oyuncak Kemik">
+                <div class="item-details">
+                    <span>1 Oyuncak Kemik</span>
+                    <span>50000 Doggar</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="navbar">
         <div class="nav-button"><i class="fa fa-arrow-up"></i><br>UPGRADES</div>
-        <div class="nav-button"><i class="fa fa-shopping-cart"></i><br>MARKET</div>
+        <div class="nav-button" onclick="toggleMarket()"><i class="fa fa-shopping-cart"></i><br>MARKET</div>
         <div class="nav-button"><i class="fa fa-home"></i><br>MAIN</div>
         <div class="nav-button"><i class="fa fa-tasks"></i><br>TASKS</div>
         <div class="nav-button"><i class="fa fa-users"></i><br>FRENS</div>

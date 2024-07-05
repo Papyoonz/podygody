@@ -166,6 +166,7 @@ body, html {
     padding: 5px;
     border-radius: 5px;
     flex: 1;
+    position: relative;
 }
 
 .custom-button img {
@@ -183,6 +184,28 @@ body, html {
 
 .custom-button:not(:last-child) {
     margin-right: 5px;
+}
+
+.custom-button.active::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border: 2px solid lime;
+    border-radius: 5px;
+    pointer-events: none;
+    animation: glow 1s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 10px lime;
+    }
+    to {
+        box-shadow: 0 0 20px lime;
+    }
 }
 
 .click-dog {

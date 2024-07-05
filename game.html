@@ -24,7 +24,7 @@
     </div>
 
     <div class="gold-section">
-        <div class="currency-display">1000 Doggar</div>
+        <div class="currency-display" id="doggar-display">0 Doggar</div>
     </div>
 
     <div class="main">
@@ -44,43 +44,45 @@
         </div>
 
         <div class="click-dog">
-            <img src="dog.png" alt="Dog" class="dog">
+            <img src="dog.png" alt="Dog" class="dog" id="dog">
         </div>
 
         <div class="bars-section">
             <div class="energy-bar">
                 <img src="energy.png" class="bar-icon">
                 <div class="bar">
-                    <div class="fill" style="width: 97%;"></div>
+                    <div class="fill" id="energy-fill" style="width: 5%;"></div>
                 </div>
-                <div class="percentage">97%</div>
+                <div class="percentage" id="energy-percentage">5%</div>
             </div>
             <div class="happiness-bar">
                 <img src="kalp.png" class="bar-icon">
                 <div class="bar">
-                    <div class="fill" style="width: 85%;"></div>
+                    <div class="fill" id="happiness-fill" style="width: 10%;"></div>
                 </div>
-                <div class="percentage">85%</div>
+                <div class="percentage" id="happiness-percentage">10%</div>
             </div>
         </div>
 
         <div class="inventory">
             <div class="inventory-items">
-                <button class="inventory-item">
+                <button class="inventory-item" onclick="giveMama()">
                     <img src="mama.png" alt="Mama Icon">
-                    <span>Mama</span>
+                    <span>Mama <span id="mama-count">3</span></span>
                 </button>
-                <button class="inventory-item">
+                <button class="inventory-item" onclick="giveWater()">
                     <img src="su.png" alt="Su Icon">
-                    <span>Su</span>
+                    <span>Su <span id="water-count">1</span></span>
                 </button>
-                <button class="inventory-item">
+                <button class="inventory-item" onclick="giveTop()">
                     <img src="top.png" alt="Top Icon">
                     <span>Top</span>
+                    <span id="top-timer">0:00</span>
                 </button>
-                <button class="inventory-item">
+                <button class="inventory-item" onclick="giveBone()">
                     <img src="oy.png" alt="Oyuncak Kemik Icon">
                     <span>Oyuncak Kemik</span>
+                    <span id="bone-timer">0:00</span>
                 </button>
             </div>
         </div>
@@ -95,5 +97,6 @@
     </div>
 
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="scripts.js"></script>
 </body>
 </html>

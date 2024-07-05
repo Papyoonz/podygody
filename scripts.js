@@ -176,31 +176,37 @@ function giveBone() {
 }
 
 function startCooldown(item) {
+    let interval;
     if (item === 'top') {
-        let topInterval = setInterval(() => {
+        document.getElementById('top-item').classList.add('cooldown');
+        interval = setInterval(() => {
             if (topCooldown > 0) {
                 topCooldown--;
                 document.getElementById('top-timer').innerText = formatTime(topCooldown);
             } else {
-                clearInterval(topInterval);
+                clearInterval(interval);
+                document.getElementById('top-item').classList.remove('cooldown');
             }
         }, 1000);
     } else if (item === 'bone') {
-        let boneInterval = setInterval(() => {
+        document.getElementById('bone-item').classList.add('cooldown');
+        interval = setInterval(() => {
             if (boneCooldown > 0) {
                 boneCooldown--;
                 document.getElementById('bone-timer').innerText = formatTime(boneCooldown);
             } else {
-                clearInterval(boneInterval);
+                clearInterval(interval);
+                document.getElementById('bone-item').classList.remove('cooldown');
             }
         }, 1000);
     } else if (item === 'cypup') {
-        let cyPupInterval = setInterval(() => {
+        document.getElementById('cypup-item').classList.add('cooldown');
+        interval = setInterval(() => {
             if (cyPupCooldown > 0) {
                 cyPupCooldown--;
                 document.getElementById('cypup-timer').innerText = formatTime(cyPupCooldown);
             } else {
-                clearInterval(cyPupInterval);
+                clearInterval(interval);
                 document.getElementById('cypup-item').classList.remove('cooldown');
             }
         }, 1000);

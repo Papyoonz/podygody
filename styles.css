@@ -376,12 +376,20 @@ body, html {
 }
 
 .item-timer {
-    top: 40px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 50%; /* Üstten ortalama */
+    left: 50%; /* Soldan ortalama */
+    transform: translate(-50%, -50%); /* Tam ortalamak için */
+    font-size: 1em; /* Yazı boyutunu büyütüyorum */
     background: rgba(0, 0, 0, 0.5); /* Transparan arkaplan */
     padding: 2px 5px; /* İç boşluk */
     border-radius: 5px; /* Köşeleri yuvarla */
+}
+
+/* Cooldown süresince buttonların gri renkte olması */
+.inventory-item.cooldown {
+    background: gray;
+    opacity: 0.6; /* Hafif şeffaflık ekleyerek gri görünüm */
+    pointer-events: none; /* Tıklanamaz yapma */
 }
 
 .inventory-item:hover {

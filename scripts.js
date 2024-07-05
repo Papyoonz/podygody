@@ -12,6 +12,9 @@ let autoBotInterval = null;
 let autoBotRunning = false;
 let autoBotStartTime = null;
 let autoBotElapsedTime = 0;
+let autoBotTimerInterval = null;
+let cyDogsPurchased = false;
+let cyPupCooldown = 0;
 
 const levels = [
     { name: 'PUPPY', expRequired: 100 },
@@ -28,8 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('dog').addEventListener('click', () => {
         if (energy > 0) {
             increaseDoggar();
-            decreaseEnergy(0.2);
-            decreaseHappiness(0.2);
+            decreaseEnergy(0.5);
+            decreaseHappiness(0.5);
         }
     });
 
@@ -52,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateLevelName();
     updateDoggarDisplay();
     updateInventory();
+    startCyPupCooldown();
 });
 
 function increaseDoggar() {
@@ -176,6 +180,16 @@ function startCooldown(item) {
                 clearInterval(boneInterval);
             }
         }, 1000);
+    } else if (item === 'cypup') {
+        let cyPupInterval = setInterval(() => {
+            if (cyPupCooldown > 0) {
+                cyPupCooldown--;
+                document.getElementById('cypup-timer').innerText = formatTime(cyPupCooldown);
+            } else {
+                clearInterval(cyPupInterval);
+                document.getElementById('cypup-item').classList.remove('cooldown');
+            }
+        }, 1000);
     }
 }
 
@@ -197,6 +211,15 @@ function updateHappinessBar() {
 
 function updateDoggarDisplay() {
     document.getElementById('doggar-display').innerText = `${doggar.toFixed(2)} Doggar`;
+    animateDoggarDisplay();
+}
+
+function animateDoggarDisplay() {
+    const doggarDisplay = document.getElementById('doggar-display');
+    doggarDisplay.classList.add('animate');
+    setTimeout(() => {
+        doggarDisplay.classList.remove('animate');
+    }, 500);
 }
 
 function updateInventory() {
@@ -237,16 +260,15 @@ function toggleAutoBot() {
     const autoBotTimer = document.getElementById('auto-bot-timer');
     if (autoBotRunning) {
         clearInterval(autoBotInterval);
+        clearInterval(autoBotTimerInterval);
         cydogsButton.classList.remove('active');
         autoBotRunning = false;
     } else {
         autoBotRunning = true;
         autoBotStartTime = new Date().getTime();
         cydogsButton.classList.add('active');
-        autoBotInterval = setInterval(() => {
-            const currentTime = new Date().getTime();
-            autoBotElapsedTime += currentTime - autoBotStartTime;
-            autoBotStartTime = currentTime;
+        autoBotTimerInterval = setInterval(() => {
+            autoBotElapsedTime += 1000;
             const remainingTime = 30 * 60 * 1000 - autoBotElapsedTime;
             if (remainingTime <= 0) {
                 toggleAutoBot();
@@ -254,38 +276,51 @@ function toggleAutoBot() {
                 return;
             }
             autoBotTimer.innerText = formatTime(Math.floor(remainingTime / 1000));
+        }, 1000);
+        autoBotInterval = setInterval(() => {
             autoBotActions();
-        }, 200); // Saniyede 5 kez
+        }, 500); // Saniyede 2 kez
     }
 }
 
 function autoBotActions() {
-    if (energy < 100) {
-        if (mamaCount > 0 && mamaUsed < 3) {
-            giveMama();
-        } else if (waterCount > 0) {
-            giveWater();
-        } else {
-            while (energy > 0) {
-                increaseDoggar();
-                decreaseEnergy(0.04); // Saniyede 5 kez tıklama için ayarlandı
-                decreaseHappiness(0.04); // Saniyede 5 kez tıklama için ayarlandı
+    if (energy >= 1) {
+        if (energy < 100) {
+            if (energy <= 1.1 && mamaCount > 0 && mamaUsed < 3) {
+                giveMama();
+                setTimeout(autoBotActions, 2000); // 2 saniye bekle
+                return;
+            } else if (energy <= 1.1 && waterCount > 0) {
+                giveWater();
+                setTimeout(autoBotActions, 2000); // 2 saniye bekle
+                return;
             }
-            toggleAutoBot();
-            alert('Mama ve su bitti, otobot durdu.');
-            return;
         }
-    }
 
-    if (topCooldown === 0) {
-        giveTop();
-    }
+        if (topCooldown === 0) {
+            giveTop();
+        }
 
-    if (boneCooldown === 0) {
-        giveBone();
-    }
+        if (boneCooldown === 0) {
+            giveBone();
+        }
 
-    increaseDoggar();
-    decreaseEnergy(0.04); // Saniyede 5 kez tıklama için ayarlandı
-    decreaseHappiness(0.04); // Saniyede 5 kez tıklama için ayarlandı
+        increaseDoggar();
+        decreaseEnergy(0.5); // Saniyede 2 kez tıklama için ayarlandı
+        decreaseHappiness(0.5); // Saniyede 2 kez tıklama için ayarlandı
+    } else {
+        toggleAutoBot();
+        showAlert('Enerji bitti, otobot durdu.');
+    }
+}
+
+function showAlert(message) {
+    const alertBox = document.createElement('div');
+    alertBox.classList.add('alert-box');
+    alertBox.innerText = message;
+    document.body.appendChild(alertBox);
+
+    setTimeout(() => {
+        alertBox.remove();
+    }, 5000);
 }

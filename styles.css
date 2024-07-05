@@ -135,6 +135,11 @@ body, html {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     width: auto;
+    transition: transform 0.5s;
+}
+
+.currency-display.animate {
+    transform: scale(1.5);
 }
 
 .main {
@@ -383,8 +388,9 @@ body, html {
 }
 
 .market-item {
-    background: white;
-    color: black;
+    background: rgba(0, 0, 0, 0.5); /* Saydam koyu gri */
+    color: white;
+    border: 1px solid gray;
     border-radius: 10px;
     margin: 10px;
     padding: 10px;
@@ -395,6 +401,9 @@ body, html {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Beyaz gölge */
 }
 
 .market-item img {
@@ -407,6 +416,21 @@ body, html {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.market-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.market-item.purchased {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.market-item.cooldown {
+    opacity: 0.5;
+    pointer-events: none;
 }
 
 .hidden {
@@ -447,7 +471,31 @@ body, html {
     color: white;
     font-weight: bold;
     font-size: 1em;
-    margin-top: 10px;
+    margin-top: 5px;
+}
+
+.alert-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    z-index: 10000;
+    animation: fadeInOut 5s forwards;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
 }
 
 @media (max-width: 768px) {

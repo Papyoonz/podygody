@@ -22,7 +22,7 @@
     </div>
 
     <div class="gold-section">
-        <div class="currency-display" id="doggar-display">100.00 Doggar</div>
+        <div class="currency-display animate" id="doggar-display">100.00 Doggar</div>
     </div>
 
     <div class="main" id="main-screen">
@@ -38,6 +38,7 @@
             <button class="custom-button" id="cydogs-button" onclick="toggleAutoBot()">
                 <img src="box.png" alt="CYDOGS Icon">
                 <span>CYDOGS</span>
+                <div id="auto-bot-timer" class="auto-bot-timer">30:00</div>
             </button>
         </div>
 
@@ -86,7 +87,6 @@
                 </button>
             </div>
         </div>
-        <div id="auto-bot-timer" class="auto-bot-timer">30:00</div>
     </div>
 
     <div class="market hidden" id="market">
@@ -147,6 +147,8 @@
         <div class="nav-button"><i class="fa fa-tasks"></i><br>TASKS</div>
         <div class="nav-button"><i class="fa fa-users"></i><br>FRENS</div>
     </div>
+
+    <div class="alert-box hidden" id="alert-box"></div>
 
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="scripts.js"></script>

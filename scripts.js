@@ -188,3 +188,31 @@ function updateHappinessBar() {
     document.getElementById('happiness-fill').style.width = `${happiness}%`;
     document.getElementById('happiness-percentage').innerText = `${happiness.toFixed(2)}%`;
 }
+
+function toggleMarket() {
+    const market = document.getElementById('market');
+    const mainScreen = document.getElementById('main-screen');
+    market.classList.toggle('hidden');
+    mainScreen.classList.toggle('hidden');
+}
+
+function buyItem(item, cost, amount) {
+    if (doggar >= cost) {
+        doggar -= cost;
+        document.getElementById('doggar-display').innerText = `${doggar.toFixed(2)} Doggar`;
+
+        if (item === 'mama') {
+            mamaCount += amount;
+            document.getElementById('mama-count').innerText = mamaCount;
+        } else if (item === 'su') {
+            waterCount += amount;
+            document.getElementById('water-count').innerText = waterCount;
+        } else if (item === 'top') {
+            // Top için özel işlem
+        } else if (item === 'oyuncak') {
+            // Oyuncak kemik için özel işlem
+        }
+    } else {
+        alert('Yeterli doggar yok!');
+    }
+}

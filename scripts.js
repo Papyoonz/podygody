@@ -1,272 +1,154 @@
-let doggar = 0;
-let energy = 5;
-let happiness = 10;
-let mamaCount = 3;
-let waterCount = 1;
-let topCooldown = 0;
-let boneCooldown = 0;
-let mamaUsed = 0;
-let experience = 0;
-let level = 1;
-let autoBotInterval = null;
-let autoBotRunning = false;
-let autoBotStartTime = null;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>DOGaLYPSE - Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap">
+</head>
+<body class="game">
+    <div class="header">
+        <div class="bottom-section">
+            <div class="level-experience">
+                <div class="player-level" id="level-name">PUPPY</div>
+                <div class="exp-bar">
+                    <div class="exp-fill" id="exp-fill" style="width: 0%;"></div>
+                    <div class="exp-percentage" id="exp-percentage">0%</div>
+                </div>
+            </div>
+            <div class="wallet-button">WALLET</div>
+        </div>
+    </div>
 
-const levels = [
-    { name: 'PUPPY', expRequired: 100 },
-    { name: 'TEEDOGY', expRequired: 1000 },
-    { name: 'DOGGEN', expRequired: 10000 },
-    { name: 'DOGZY', expRequired: 100000 },
-    { name: 'GENDOG', expRequired: 1000000 },
-    { name: 'GENIDOG', expRequired: 10000000 },
-    { name: 'GENIUDOG', expRequired: 100000000 },
-    { name: 'GENIUSDOG', expRequired: 1000000000 }
-];
+    <div class="gold-section">
+        <div class="currency-display" id="doggar-display">100.00 Doggar</div>
+    </div>
 
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('dog').addEventListener('click', () => {
-        if (energy > 0) {
-            increaseDoggar();
-            decreaseEnergy(0.2);
-            decreaseHappiness(0.2);
-        }
-    });
+    <div class="main" id="main-screen">
+        <div class="button-container">
+            <button class="custom-button">
+                <img src="sh.png" alt="Shelter Icon">
+                <span>SHELTER</span>
+            </button>
+            <button class="custom-button">
+                <img src="man.png" alt="Team Icon">
+                <span>TEAM</span>
+            </button>
+            <button class="custom-button" id="cydogs-button" onclick="toggleAutoBot()">
+                <img src="box.png" alt="CYDOGS Icon">
+                <span>CYDOGS</span>
+            </button>
+        </div>
 
-    // Disable right-click
-    document.addEventListener('contextmenu', event => event.preventDefault());
+        <div class="click-dog">
+            <img src="dog.png" alt="Dog" class="dog" id="dog">
+        </div>
 
-    // Disable double-tap zoom on mobile devices
-    let lastTouchEnd = 0;
-    document.addEventListener('touchend', event => {
-        const now = new Date().getTime();
-        if (now - lastTouchEnd <= 300) {
-            event.preventDefault();
-        }
-        lastTouchEnd = now;
-    }, false);
+        <div class="bars-section">
+            <div class="energy-bar">
+                <img src="energy.png" class="bar-icon">
+                <div class="bar">
+                    <div class="fill" id="energy-fill" style="width: 100%;"></div>
+                </div>
+                <div class="percentage" id="energy-percentage">100.00%</div>
+            </div>
+            <div class="happiness-bar">
+                <img src="kalp.png" class="bar-icon">
+                <div class="bar">
+                    <div class="fill" id="happiness-fill" style="width: 50%;"></div>
+                </div>
+                <div class="percentage" id="happiness-percentage">50.00%</div>
+            </div>
+        </div>
 
-    updateEnergyBar();
-    updateHappinessBar();
-    updateExperienceBar();
-    updateLevelName();
-});
+        <div class="inventory">
+            <div class="inventory-items">
+                <button class="inventory-item" onclick="giveMama()">
+                    <img src="mama.png" alt="Mama Icon">
+                    <span>Mama</span>
+                    <div class="item-count" id="mama-count">30</div>
+                </button>
+                <button class="inventory-item" onclick="giveWater()">
+                    <img src="su.png" alt="Su Icon">
+                    <span>Su</span>
+                    <div class="item-count" id="water-count">10</div>
+                </button>
+                <button class="inventory-item" onclick="giveTop()">
+                    <img src="top.png" alt="Top Icon">
+                    <span>Top</span>
+                    <div class="item-timer" id="top-timer">0:00</div>
+                </button>
+                <button class="inventory-item" onclick="giveBone()">
+                    <img src="oy.png" alt="Oyuncak Kemik Icon">
+                    <span>Oyuncak Kemik</span>
+                    <div class="item-timer" id="bone-timer">0:00</div>
+                </button>
+            </div>
+        </div>
+        <div id="auto-bot-timer" class="auto-bot-timer">30:00</div>
+    </div>
 
-function increaseDoggar() {
-    let earnedDoggar = (Math.random() * 1.9) + 0.1; // Rastgele 0.1 ila 2 arasında doggar kazan
-    doggar += parseFloat(earnedDoggar.toFixed(2));
-    document.getElementById('doggar-display').innerText = `${doggar.toFixed(2)} Doggar`;
-    increaseExperience(earnedDoggar);
-}
+    <div class="market hidden" id="market">
+        <div class="market-header">
+            <h2>Market</h2>
+            <button class="close-button" onclick="toggleMarket()">X</button>
+        </div>
+        <div class="market-items">
+            <div class="market-item" onclick="buyItem('mama', 50, 10)">
+                <img src="mama.png" alt="Mama">
+                <div class="item-details">
+                    <span>10 Mama</span>
+                    <span>50 Doggar</span>
+                </div>
+            </div>
+            <div class="market-item" onclick="buyItem('mama', 250, 100)">
+                <img src="mama.png" alt="Mama">
+                <div class="item-details">
+                    <span>100 Mama</span>
+                    <span>250 Doggar</span>
+                </div>
+            </div>
+            <div class="market-item" onclick="buyItem('su', 100, 10)">
+                <img src="su.png" alt="Su">
+                <div class="item-details">
+                    <span>10 Su</span>
+                    <span>100 Doggar</span>
+                </div>
+            </div>
+            <div class="market-item" onclick="buyItem('su', 250, 50)">
+                <img src="su.png" alt="Su">
+                <div class="item-details">
+                    <span>50 Su</span>
+                    <span>250 Doggar</span>
+                </div>
+            </div>
+            <div class="market-item" onclick="buyItem('top', 10000, 1)">
+                <img src="top.png" alt="Top">
+                <div class="item-details">
+                    <span>1 Top</span>
+                    <span>10000 Doggar</span>
+                </div>
+            </div>
+            <div class="market-item" onclick="buyItem('oyuncak', 50000, 1)">
+                <img src="oy.png" alt="Oyuncak Kemik">
+                <div class="item-details">
+                    <span>1 Oyuncak Kemik</span>
+                    <span>50000 Doggar</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
-function increaseExperience(amount) {
-    experience += amount;
-    const currentLevel = levels[level - 1];
-    if (experience >= currentLevel.expRequired) {
-        levelUp();
-    }
-    updateExperienceBar();
-}
+    <div class="navbar">
+        <div class="nav-button"><i class="fa fa-arrow-up"></i><br>UPGRADES</div>
+        <div class="nav-button" onclick="toggleMarket()"><i class="fa fa-shopping-cart"></i><br>MARKET</div>
+        <div class="nav-button"><i class="fa fa-home"></i><br>MAIN</div>
+        <div class="nav-button"><i class="fa fa-tasks"></i><br>TASKS</div>
+        <div class="nav-button"><i class="fa fa-users"></i><br>FRENS</div>
+    </div>
 
-function levelUp() {
-    experience -= levels[level - 1].expRequired;
-    level++;
-    updateLevelName();
-}
-
-function updateLevelName() {
-    const currentLevel = levels[level - 1];
-    document.getElementById('level-name').innerText = currentLevel.name;
-}
-
-function updateExperienceBar() {
-    const currentLevel = levels[level - 1];
-    const expPercentage = (experience / currentLevel.expRequired) * 100;
-    document.getElementById('exp-fill').style.width = `${expPercentage}%`;
-    document.getElementById('exp-percentage').innerText = `${expPercentage.toFixed(2)}%`;
-}
-
-function increaseEnergy(amount) {
-    if (energy < 100) {
-        energy += amount;
-        if (energy > 100) energy = 100;
-        updateEnergyBar();
-    }
-}
-
-function increaseHappiness(amount) {
-    if (happiness < 100) {
-        happiness += amount;
-        if (happiness > 100) happiness = 100;
-        updateHappinessBar();
-    }
-}
-
-function decreaseEnergy(amount) {
-    if (energy > 0) {
-        energy -= amount;
-        if (energy < 0) energy = 0;
-        updateEnergyBar();
-    }
-}
-
-function decreaseHappiness(amount) {
-    if (happiness > 0) {
-        happiness -= amount;
-        if (happiness < 0) happiness = 0;
-        updateHappinessBar();
-    }
-}
-
-function giveMama() {
-    if (mamaCount > 0 && mamaUsed < 3) {
-        mamaCount--;
-        mamaUsed++;
-        increaseEnergy(10);
-        document.getElementById('mama-count').innerText = mamaCount;
-    } else if (mamaUsed >= 3) {
-        alert('Çok susadım!');
-    }
-}
-
-function giveWater() {
-    if (waterCount > 0) {
-        waterCount--;
-        mamaUsed = 0; // Mama kullanım sayısını sıfırla
-        increaseEnergy(5);
-        document.getElementById('water-count').innerText = waterCount;
-    }
-}
-
-function giveTop() {
-    if (topCooldown === 0) {
-        let happinessIncrease = Math.floor(Math.random() * 5) + 1;
-        increaseHappiness(happinessIncrease);
-        topCooldown = 600; // 10 dakika (600 saniye)
-        startCooldown('top');
-    }
-}
-
-function giveBone() {
-    if (boneCooldown === 0) {
-        increaseHappiness(15);
-        boneCooldown = 3600; // 1 saat (3600 saniye)
-        startCooldown('bone');
-    }
-}
-
-function startCooldown(item) {
-    if (item === 'top') {
-        let topInterval = setInterval(() => {
-            if (topCooldown > 0) {
-                topCooldown--;
-                document.getElementById('top-timer').innerText = formatTime(topCooldown);
-            } else {
-                clearInterval(topInterval);
-            }
-        }, 1000);
-    } else if (item === 'bone') {
-        let boneInterval = setInterval(() => {
-            if (boneCooldown > 0) {
-                boneCooldown--;
-                document.getElementById('bone-timer').innerText = formatTime(boneCooldown);
-            } else {
-                clearInterval(boneInterval);
-            }
-        }, 1000);
-    }
-}
-
-function formatTime(seconds) {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
-}
-
-function updateEnergyBar() {
-    document.getElementById('energy-fill').style.width = `${energy}%`;
-    document.getElementById('energy-percentage').innerText = `${energy.toFixed(2)}%`;
-}
-
-function updateHappinessBar() {
-    document.getElementById('happiness-fill').style.width = `${happiness}%`;
-    document.getElementById('happiness-percentage').innerText = `${happiness.toFixed(2)}%`;
-}
-
-function toggleMarket() {
-    const market = document.getElementById('market');
-    const mainScreen = document.getElementById('main-screen');
-    market.classList.toggle('hidden');
-    mainScreen.classList.toggle('hidden');
-}
-
-function buyItem(item, cost, amount) {
-    if (doggar >= cost) {
-        doggar -= cost;
-        document.getElementById('doggar-display').innerText = `${doggar.toFixed(2)} Doggar`;
-
-        if (item === 'mama') {
-            mamaCount += amount;
-            document.getElementById('mama-count').innerText = mamaCount;
-        } else if (item === 'su') {
-            waterCount += amount;
-            document.getElementById('water-count').innerText = waterCount;
-        } else if (item === 'top') {
-            // Top için özel işlem
-        } else if (item === 'oyuncak') {
-            // Oyuncak kemik için özel işlem
-        }
-    } else {
-        alert('Yeterli doggar yok!');
-    }
-}
-
-function toggleAutoBot() {
-    const cydogsButton = document.getElementById('cydogs-button');
-    if (autoBotRunning) {
-        clearInterval(autoBotInterval);
-        cydogsButton.classList.remove('active');
-        autoBotRunning = false;
-    } else {
-        autoBotRunning = true;
-        autoBotStartTime = new Date().getTime();
-        cydogsButton.classList.add('active');
-        autoBotInterval = setInterval(() => {
-            const currentTime = new Date().getTime();
-            const elapsedTime = currentTime - autoBotStartTime;
-            if (elapsedTime > 30 * 60 * 1000) { // 30 dakika
-                toggleAutoBot();
-                alert('Otobot 30 dakika çalıştı ve durdu.');
-                return;
-            }
-            autoBotActions();
-        }, 10); // Saniyede 100 kez
-    }
-}
-
-function autoBotActions() {
-    if (energy < 100) {
-        if (mamaCount > 0 && mamaUsed < 3) {
-            giveMama();
-        } else if (waterCount > 0) {
-            giveWater();
-        } else {
-            toggleAutoBot();
-            alert('Mama ve su bitti, otobot durdu.');
-            return;
-        }
-    }
-
-    if (topCooldown === 0) {
-        giveTop();
-    }
-
-    if (boneCooldown === 0) {
-        giveBone();
-    }
-
-    for (let i = 0; i < 10; i++) {
-        increaseDoggar();
-        decreaseEnergy(0.002);
-        decreaseHappiness(0.002);
-    }
-}
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>

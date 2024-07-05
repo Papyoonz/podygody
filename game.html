@@ -22,7 +22,7 @@
     </div>
 
     <div class="gold-section">
-        <div class="currency-display" id="doggar-display">0 Doggar</div>
+        <div class="currency-display" id="doggar-display">100.00 Doggar</div>
     </div>
 
     <div class="main" id="main-screen">
@@ -49,16 +49,16 @@
             <div class="energy-bar">
                 <img src="energy.png" class="bar-icon">
                 <div class="bar">
-                    <div class="fill" id="energy-fill" style="width: 5%;"></div>
+                    <div class="fill" id="energy-fill" style="width: 100%;"></div>
                 </div>
-                <div class="percentage" id="energy-percentage">5.00%</div>
+                <div class="percentage" id="energy-percentage">100.00%</div>
             </div>
             <div class="happiness-bar">
                 <img src="kalp.png" class="bar-icon">
                 <div class="bar">
-                    <div class="fill" id="happiness-fill" style="width: 10%;"></div>
+                    <div class="fill" id="happiness-fill" style="width: 50%;"></div>
                 </div>
-                <div class="percentage" id="happiness-percentage">10.00%</div>
+                <div class="percentage" id="happiness-percentage">50.00%</div>
             </div>
         </div>
 
@@ -67,12 +67,12 @@
                 <button class="inventory-item" onclick="giveMama()">
                     <img src="mama.png" alt="Mama Icon">
                     <span>Mama</span>
-                    <div class="item-count" id="mama-count">3</div>
+                    <div class="item-count" id="mama-count">30</div>
                 </button>
                 <button class="inventory-item" onclick="giveWater()">
                     <img src="su.png" alt="Su Icon">
                     <span>Su</span>
-                    <div class="item-count" id="water-count">1</div>
+                    <div class="item-count" id="water-count">10</div>
                 </button>
                 <button class="inventory-item" onclick="giveTop()">
                     <img src="top.png" alt="Top Icon">
@@ -86,6 +86,7 @@
                 </button>
             </div>
         </div>
+        <div id="auto-bot-timer" class="auto-bot-timer">30:00</div>
     </div>
 
     <div class="market hidden" id="market">

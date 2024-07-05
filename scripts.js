@@ -1,13 +1,16 @@
-let doggar = 1000;
-let energy = 10;
-let happiness = 50;
-let mamaCount = 30;
-let waterCount = 10;
+let doggar = 0;
+let energy = 5;
+let happiness = 10;
+let mamaCount = 3;
+let waterCount = 1;
 let topCooldown = 0;
 let boneCooldown = 0;
 let mamaUsed = 0;
 let experience = 0;
 let level = 1;
+let autoBotInterval = null;
+let autoBotRunning = false;
+let autoBotStartTime = null;
 
 const levels = [
     { name: 'PUPPY', expRequired: 100 },
@@ -214,5 +217,56 @@ function buyItem(item, cost, amount) {
         }
     } else {
         alert('Yeterli doggar yok!');
+    }
+}
+
+function toggleAutoBot() {
+    const dropButton = document.getElementById('drop-button');
+    if (autoBotRunning) {
+        clearInterval(autoBotInterval);
+        dropButton.classList.remove('active');
+        autoBotRunning = false;
+    } else {
+        autoBotRunning = true;
+        autoBotStartTime = new Date().getTime();
+        dropButton.classList.add('active');
+        autoBotInterval = setInterval(() => {
+            const currentTime = new Date().getTime();
+            const elapsedTime = currentTime - autoBotStartTime;
+            if (elapsedTime > 30 * 60 * 1000) { // 30 dakika
+                toggleAutoBot();
+                alert('Otobot 30 dakika çalıştı ve durdu.');
+                return;
+            }
+            autoBotActions();
+        }, 10); // Saniyede 100 kez
+    }
+}
+
+function autoBotActions() {
+    if (energy < 100) {
+        if (mamaCount > 0 && mamaUsed < 3) {
+            giveMama();
+        } else if (waterCount > 0) {
+            giveWater();
+        } else {
+            toggleAutoBot();
+            alert('Mama ve su bitti, otobot durdu.');
+            return;
+        }
+    }
+
+    if (topCooldown === 0) {
+        giveTop();
+    }
+
+    if (boneCooldown === 0) {
+        giveBone();
+    }
+
+    for (let i = 0; i < 10; i++) {
+        increaseDoggar();
+        decreaseEnergy(0.002);
+        decreaseHappiness(0.002);
     }
 }

@@ -29,6 +29,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Disable right-click
+    document.addEventListener('contextmenu', event => event.preventDefault());
+
+    // Disable double-tap zoom on mobile devices
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', event => {
+        const now = new Date().getTime();
+        if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, false);
+
     updateEnergyBar();
     updateHappinessBar();
     updateExperienceBar();

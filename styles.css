@@ -276,6 +276,7 @@ body, html {
     transition: transform 0.2s, box-shadow 0.2s;
     width: 80px; /* Daha büyük boyut */
     height: 80px; /* Daha büyük boyut */
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -286,6 +287,26 @@ body, html {
     width: 25px; /* Daha büyük ikon */
     height: 25px; /* Daha büyük ikon */
     margin-bottom: 5px;
+}
+
+.inventory-item span {
+    margin-top: 5px;
+}
+
+.item-count, .item-timer {
+    position: absolute;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: white;
+}
+
+.item-count {
+    top: 5px;
+    right: 5px;
+}
+
+.item-timer {
+    bottom: 5px;
 }
 
 .inventory-item:hover {

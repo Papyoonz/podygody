@@ -18,7 +18,7 @@ body, html {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    background-image: url('doga2.GIF');
+    background-image: url('doga.gif');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -271,6 +271,7 @@ body, html {
 .inventory {
     width: 100%;
     margin-top: 5px; /* Margin azaltıldı */
+    margin-bottom: 10px; /* Navbar ile arada boşluk */
 }
 
 .inventory-items {
@@ -322,7 +323,6 @@ body, html {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     position: fixed; /* Navbar'ı sabitler */
     bottom: 0; /* Navbar'ı sayfanın altına yerleştirir */
-    margin-bottom: 5px; /* Navbar ile arada boşluk */
 }
 
 .navbar .nav-button {
